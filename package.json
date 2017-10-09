@@ -1,0 +1,27 @@
+{
+  "name": "hyperapp-events",
+  "version": "0.0.1",
+  "description": "Adds an event bus to hyperapp",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "ava test/*.test.js",
+    "build": "browserify src/index.js  --standalone appEvents | uglifyjs --mangle --compress > dist/hyperapp-events.umd.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaceno/hyperapp-events.git"
+  },
+  "author": "Zacharias Enochsson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zaceno/hyperapp-events/issues"
+  },
+  "homepage": "https://github.com/zaceno/hyperapp-eventsl#readme",
+  "devDependencies": {
+    "ava": "^0.22.0",
+    "browserify": "^14.4.0",
+    "hyperapp": "hyperapp/hyperapp#modules",
+    "uglify-js": "^3.0.28",
+    "jsdom": "^11.3.0"
+  }
+}
