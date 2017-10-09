@@ -29,7 +29,7 @@ app(appEvents)({
 Add the following script tag to the `<head>...</head>` section of your html page:
 
 ```html
-<script src="https://unpkg.com/zaceno/hyperapp-events@latest/dist/hyperapp-events.umd.js"></script>
+<script src="https://unpkg.com/hyperapp-events@latest/dist/hyperapp-events.umd.js"></script>
 
 ```
 
