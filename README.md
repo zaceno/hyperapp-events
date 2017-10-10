@@ -18,7 +18,7 @@ Then import/require `appEvents` in your project, and use it to decorate your app
 ```js
 const appEvents = require('hyperapp-events')
 
-app(appEvents)({
+appEvents(app)({
   ...
 })
 
@@ -37,7 +37,7 @@ Add the following script tag to the `<head>...</head>` section of your html page
 
 
 ```js
-app(appEvents)({
+appEvents(app)({
   ...
 })
 ```
