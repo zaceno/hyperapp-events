@@ -56,12 +56,12 @@ var makeEmitter = function (handlers) {
 }
 
 module.exports = function (app) {
-    return function (opts) {
+    return function (opts, container) {
         var actions
         var emit = function (name, data) {  return actions.__emit([name, data]) }
         opts = decorateActionTree(opts, emit)
         opts.actions.__emit = makeEmitter(collectHandlers(opts))
-        actions = app(opts)
+        actions = app(opts, container)
         return actions
     }
 }

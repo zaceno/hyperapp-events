@@ -39,7 +39,6 @@ test.afterEach('clean up dom', t => {
 test.cb('Main app listens to its own events', t => {
     t.plan(1)
     app({
-        root: t.context.container,
         events: {
             'testevent': (state, actions) => {
                 t.pass()
@@ -56,7 +55,7 @@ test.cb('Main app listens to its own events', t => {
                 t.end()
             }, 0)
         }
-    })
+    }, t.context.container)
 })
 
 
@@ -70,7 +69,6 @@ test.cb('Child listens to main', t => {
         }
     }
     app({
-        root: t.context.container,
         modules: {foo},
         actions: {
             test: (state, actions, data, emit) => {
@@ -84,7 +82,7 @@ test.cb('Child listens to main', t => {
                 t.end()
             }, 0)
         }
-    })
+    }, t.context.container)
 })
 
 test.cb('Main listens to child', t => {
@@ -104,14 +102,13 @@ test.cb('Main listens to child', t => {
         }
     }
     app({
-        root: t.context.container,
         modules: {foo},
         events: {
             'testevent': (state, actions) => {
                 t.pass()
             }
         },
-    })
+    }, t.context.container)
 })
 
 
@@ -139,15 +136,13 @@ test.cb('Different modules listen to eachother', t => {
         },
     }
     app({
-        root: t.context.container,
         modules: {foo, bar},
-    })
+    }, t.context.container)
 })
 
 test.cb('emit with payload', t => {
     const testData = 'testdata'
     app({
-        root: t.context.container,
         events:{
             testevent: (state, actions, data) => {
                 t.is(data, testData)
@@ -164,7 +159,7 @@ test.cb('emit with payload', t => {
                 t.end()
             }, 0)
         }
-    })
+    }, t.context.container)
 })
 
 test.cb('multiple event handlers', t => {
@@ -175,7 +170,6 @@ test.cb('multiple event handlers', t => {
         }
     }
     app({
-        root: t.context.container,
         modules: {
             foo: module,
             bar: module,
@@ -190,7 +184,7 @@ test.cb('multiple event handlers', t => {
                 t.end()
             }, 0)
         }
-    })
+    }, t.context.container)
 
 })
 
@@ -201,7 +195,6 @@ test.cb('emit returns what the last event handler returns', t => {
         }
     }
     app({
-        root: t.context.container,
         modules: {
             foo: module,
             bar: module,
@@ -219,7 +212,7 @@ test.cb('emit returns what the last event handler returns', t => {
                 t.end()
             }, 0)
         }
-    })
+    }, t.context.container)
 })
 
 test.cb('events state and actions scoped to the module theyre in', t => {
@@ -256,7 +249,6 @@ test.cb('events state and actions scoped to the module theyre in', t => {
     }
 
     app({
-        root: t.context.container,
         modules: {foo},
         events: {
             testevent: (state, actions) => {
@@ -274,7 +266,7 @@ test.cb('events state and actions scoped to the module theyre in', t => {
                 t.end()
             })
         }
-    })
+    }, t.context.container)
 })
 
 
