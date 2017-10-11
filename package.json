@@ -20,8 +20,8 @@
   "devDependencies": {
     "ava": "^0.22.0",
     "browserify": "^14.4.0",
-    "hyperapp": "hyperapp/hyperapp#modules",
-    "uglify-js": "^3.0.28",
-    "jsdom": "^11.3.0"
+    "hyperapp": "^0.15.0",
+    "jsdom": "^11.3.0",
+    "uglify-js": "^3.0.28"
   }
 }
