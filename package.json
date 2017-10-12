@@ -2,10 +2,13 @@
   "name": "hyperapp-events",
   "version": "0.1.0",
   "description": "Adds an event bus to hyperapp",
-  "main": "src/index.js",
+  "main": "dist/hyperapp-events.js",
+  "module": "src/index.js",
   "scripts": {
-    "test": "ava test/*.test.js",
-    "build": "browserify src/index.js  --standalone appEvents | uglifyjs --mangle --compress > dist/hyperapp-events.umd.js"
+    "build:umd": "rollup -i src/index.js -m -f umd -n appEvents -o dist/hyperapp-events.js",
+    "build:minify": "uglifyjs dist/hyperapp-events.js -o dist/hyperapp-events.js --mangle --compress --source-map filename=dist/hyperapp-events.js.map",
+    "build": "npm run build:umd && npm run build:minify",
+    "test": "npm run build && ava test/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -19,9 +22,9 @@
   "homepage": "https://github.com/zaceno/hyperapp-eventsl#readme",
   "devDependencies": {
     "ava": "^0.22.0",
-    "browserify": "^14.4.0",
     "hyperapp": "^0.15.0",
     "jsdom": "^11.3.0",
-    "uglify-js": "^3.0.28"
+    "uglify-js": "^3.0.28",
+    "rollup": "^0.50.0"
   }
 }

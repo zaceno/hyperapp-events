@@ -55,7 +55,7 @@ var makeEmitter = function (handlers) {
     }
 }
 
-module.exports = function (app) {
+export default function (app) {
     return function (opts, container) {
         var _emit = function () {}
         var emit = function (name, data) { return _emit(name, data)}
