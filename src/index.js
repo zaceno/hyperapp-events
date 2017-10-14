@@ -1,5 +1,5 @@
 var mapObj = function (obj, fn) {
-    var into = {}
+    var into = {}
     for (var name in obj) {
         into[name] = fn(name, obj[name])
     }
