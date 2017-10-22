@@ -269,4 +269,58 @@ test.cb('events state and actions scoped to the module theyre in', t => {
     }, t.context.container)
 })
 
+test.cb('does not affect nested action scope', t => {
+    t.plan(1)
+    const module = {
+        state: {
+            namespace: {
+                substate: 'foo'
+            }
+        },
+        actions: {
+            namespace: {
+                set: (state, actions, data, emit) => ({substate: data}),
+                get: (state, actions, data, emit) => update => state,
+            }
+        }
+    }
+    app({
+        modules: {module},
+        init: (state, actions) => {
+            actions.module.namespace.set('bar')
+            t.deepEqual(actions.module.namespace.get(), {substate: 'bar'})
+            t.end()
+        }
+    }, t.context.container)
+})
 
+test.cb('emit works in nested actions', t => {
+    t.plan(2)
+    const module = {
+        state: {
+            namespace: {
+                substate: 'foo'
+            }
+        },
+        actions: {
+            namespace: {
+                test: (state, actions, data, emit) => {emit('test', state.substate)},
+            }
+        }
+    }
+    app({
+        modules: {module},
+        events: {
+            'test': (state, actions, data) => {
+                t.deepEqual(state, {module: {namespace: {substate: 'foo'}}})
+                t.is(data, 'foo')
+            }
+        },
+        init: (state, actions) => {
+            setTimeout(_ => {
+                actions.module.namespace.test()
+                t.end()
+            })
+        }
+    }, t.context.container)
+})

@@ -6,15 +6,23 @@ var mapObj = function (obj, fn) {
     return into
 }
 
-var decorateActionTree = function (opts, emit) {
+var decorateSingleAction = function (fn, emit) {
+    return function (state, actions, data) {
+        return fn(state, actions, data, emit)
+    }
+}
+
+var decorateActionTree = function (actions, emit) {
+    return mapObj(actions, function (name, fn) {
+        return (typeof fn === 'function' ? decorateSingleAction : decorateActionTree)(fn, emit)
+    })
+}
+
+var decorateAppActions = function (opts, emit) {
     opts.modules = mapObj(opts.modules, function(scope, mod) {
-        return decorateActionTree(mod, emit)
+        return decorateAppActions(mod, emit)
     })
-    opts.actions = mapObj(opts.actions, function (name, fn) {
-        return function (state, actions, data) {
-            return fn(state, actions, data, emit)
-        }
-    })
+    opts.actions = decorateActionTree(opts.actions, emit)
     return opts
 }
 
@@ -59,7 +67,7 @@ export default function (app) {
     return function (opts, container) {
         var _emit = function () {}
         var emit = function (name, data) { return _emit(name, data)}
-        opts = decorateActionTree(opts, emit)
+        opts = decorateAppActions(opts, emit)
         opts.actions.__emit = makeEmitter(collectHandlers(opts))
         var actions = app(opts, container)
         _emit = function (name, data) {  return actions.__emit([name, data]) }
