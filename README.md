@@ -1,3 +1,6 @@
+NOTICE: This project is no longer maintained. It is not compatible with the latest hyperapp versions, and I do not presently have any plans to update it. If you'd like that to change, get in touch :) 
+
+
 # hyperapp-events
 
 `hyperapp-events` is an app decorator (a k a "higher order app") which adds an event bus to your app. Hyperapp modules are isolated from one another and can only communicate "top-down". An event bus allows dependency-free communcation between modules where that would otherwise be impossible.
